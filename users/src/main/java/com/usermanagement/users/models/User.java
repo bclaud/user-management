@@ -7,7 +7,7 @@ public class User implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
-    private int id;
+    private Integer id;
     private String name;
     private String surname;
     private String address;
@@ -16,20 +16,20 @@ public class User implements Serializable {
     public User () {
     }
 
-    public User(int id, String name, String surname) {
+    public User(Integer id, String name, String surname) {
         this.id = id;
         this.name = name;
         this.surname = surname;
     }
 
-    public User(int id, String name, String surname, String address) {
+    public User(Integer id, String name, String surname, String address) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.address = address;
     }
 
-    public long getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -56,6 +56,30 @@ public class User implements Serializable {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + id;
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        User other = (User) obj;
+        if (id != other.id)
+            return false;
+        return true;
+    }
+
+    
 
     
 }
