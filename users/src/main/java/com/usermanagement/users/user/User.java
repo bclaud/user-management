@@ -1,4 +1,4 @@
-package com.usermanagement.users.models;
+package com.usermanagement.users.user;
 
 import java.io.Serializable;
 
@@ -6,11 +6,10 @@ public class User implements Serializable {
     
     private static final long serialVersionUID = 1L;
 
-    private Integer id;
+    private Long id;
     private String name;
     private String surname;
     private String address;
-
 
     public User () {
     }
@@ -26,11 +25,11 @@ public class User implements Serializable {
         this.address = address;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id){
+    public void setId(Long id){
         this.id = id;
     }
 
@@ -87,8 +86,5 @@ public class User implements Serializable {
         } else if (!surname.equals(other.surname))
             return false;
         return true;
-    }
-
-    
-    
+    }    
 }

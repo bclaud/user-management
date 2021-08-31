@@ -1,8 +1,8 @@
-package com.usermanagement.users.models;
+package com.usermanagement.users.user;
 
 public class UserNotFoundException extends RuntimeException {
 
-    public UserNotFoundException(Integer id){
+    public UserNotFoundException(Long id){
         super("Could not find user " + id);
     }
     
