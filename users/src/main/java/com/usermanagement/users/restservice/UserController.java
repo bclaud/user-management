@@ -7,10 +7,12 @@ import java.util.stream.Collectors;
 
 import com.usermanagement.users.models.User;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -19,32 +21,43 @@ public class UserController {
     Random generator = new Random(1);
     List<User> list = new ArrayList<>();
     
-    @PostMapping("/users") //Request estao no head, passar para o body
-    public User addUser(@RequestParam(value = "name") String name,@RequestParam(value = "surname") String surname, @RequestParam(value = "address", defaultValue = "") String address){
-        if(address != ""){
-            User u = new User(generator.nextInt(10), name, surname, address);
-            list.add(u);
-            return u;
-        }else{
-            User u = new User(generator.nextInt(10), name, surname);
-            list.add(u);
-            return u;
+    
+    @PostMapping("/users")
+    public ResponseEntity<?> addUser(@RequestBody User user){
+        boolean duplicated = false;
+
+        for(User u : list){
+            if(u.equals(user)){
+                duplicated = true;
+            }
+        }
+
+        if(!duplicated){
+            int id = generator.nextInt(10);
+            user.setId(id);
+            list.add(user);
+            return ResponseEntity.ok(user);
+        } else {
+            return new ResponseEntity<>("Duplicated request", HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
     @GetMapping("/users")
-    public List<User> allUsers(){
-        return list;
+    public ResponseEntity<?> allUsers(){
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping("/users/{id}")
-    public <list>User userById(@PathVariable int id){
-
-        User userById = list.stream()
-        .filter(p -> p.getId() == id)
-        .collect(Collectors.toList())
-        .get(0);
-        return userById;
+    public ResponseEntity<?> userById(@PathVariable int id){
+        try{
+            User userById = list.stream()
+            .filter(p -> p.getId() == id)
+            .collect(Collectors.toList())
+            .get(0);
+            return ResponseEntity.ok(userById);
+        }catch (RuntimeException e){
+            return new ResponseEntity<>("User not found for ID " + id, HttpStatus.NOT_FOUND);
+        }
     }
     
 

@@ -2,7 +2,6 @@ package com.usermanagement.users.models;
 
 import java.io.Serializable;
 
-
 public class User implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -16,14 +15,12 @@ public class User implements Serializable {
     public User () {
     }
 
-    public User(Integer id, String name, String surname) {
-        this.id = id;
+    public User( String name, String surname) {
         this.name = name;
         this.surname = surname;
     }
 
-    public User(Integer id, String name, String surname, String address) {
-        this.id = id;
+    public User( String name, String surname, String address) {
         this.name = name;
         this.surname = surname;
         this.address = address;
@@ -31,6 +28,10 @@ public class User implements Serializable {
 
     public Integer getId() {
         return id;
+    }
+
+    public void setId(Integer id){
+        this.id = id;
     }
 
     public String getName() {
@@ -61,7 +62,8 @@ public class User implements Serializable {
     public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime * result + id;
+        result = prime * result + ((name == null) ? 0 : name.hashCode());
+        result = prime * result + ((surname == null) ? 0 : surname.hashCode());
         return result;
     }
 
@@ -74,12 +76,19 @@ public class User implements Serializable {
         if (getClass() != obj.getClass())
             return false;
         User other = (User) obj;
-        if (id != other.id)
+        if (name == null) {
+            if (other.name != null)
+                return false;
+        } else if (!name.equals(other.name))
+            return false;
+        if (surname == null) {
+            if (other.surname != null)
+                return false;
+        } else if (!surname.equals(other.surname))
             return false;
         return true;
     }
 
     
-
     
 }
