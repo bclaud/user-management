@@ -1,4 +1,7 @@
-package com.usermanagement.users.user;
+package com.usermanagement.users.services;
+
+import com.usermanagement.users.model.User;
+import com.usermanagement.users.repositories.UserRepository;
 
 import org.springframework.stereotype.Service;
 

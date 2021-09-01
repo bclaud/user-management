@@ -1,6 +1,10 @@
-package com.usermanagement.users.user;
+package com.usermanagement.users.controller;
 
 import java.util.List;
+
+import com.usermanagement.users.model.User;
+import com.usermanagement.users.repositories.UserRepository;
+import com.usermanagement.users.services.UserService;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

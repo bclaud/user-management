@@ -1,4 +1,4 @@
-package com.usermanagement.users.user;
+package com.usermanagement.users.model;
 
 import java.io.Serializable;
 

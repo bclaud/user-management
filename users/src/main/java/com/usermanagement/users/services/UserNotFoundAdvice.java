@@ -1,4 +1,4 @@
-package com.usermanagement.users.user;
+package com.usermanagement.users.services;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;

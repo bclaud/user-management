@@ -1,4 +1,4 @@
-package com.usermanagement.users.user;
+package com.usermanagement.users.services;
 
 public class UserNotFoundException extends RuntimeException {
 
