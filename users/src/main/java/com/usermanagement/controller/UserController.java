@@ -1,9 +1,9 @@
-package com.usermanagement.users.controller;
+package com.usermanagement.controller;
 
 import java.util.List;
 
-import com.usermanagement.users.model.User;
-import com.usermanagement.users.services.UserService;
+import com.usermanagement.services.UserService;
+import com.usermanagements.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

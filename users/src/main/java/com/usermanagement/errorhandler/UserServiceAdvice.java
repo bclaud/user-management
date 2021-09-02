@@ -1,7 +1,7 @@
-package com.usermanagement.users.errorhandler;
+package com.usermanagement.errorhandler;
 
-import com.usermanagement.users.services.exceptions.DuplicatedInsertUserException;
-import com.usermanagement.users.services.exceptions.UserNotFoundException;
+import com.usermanagement.services.exceptions.DuplicatedInsertUserException;
+import com.usermanagement.services.exceptions.UserNotFoundException;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
