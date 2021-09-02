@@ -36,16 +36,10 @@ public class UserService {
     }
     
     public boolean isNotDuplicated(User user){
-        boolean isNotDuplicated = true;
-    
-        for (User u : repository.findAll()){
-            if(user.getName().equalsIgnoreCase(u.getName())
-            && user.getSurname().equalsIgnoreCase(u.getSurname())){
-                isNotDuplicated = false;
-            }
-        }
         
-        return isNotDuplicated;
+        return repository.findAll().stream()
+            .allMatch(u -> u.getName().toLowerCase() == user.getName().toLowerCase()
+            && u.getSurname().toLowerCase() == user.getSurname().toLowerCase());
     }
     
     public Long generateId(){
