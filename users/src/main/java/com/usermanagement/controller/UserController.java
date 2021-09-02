@@ -21,8 +21,7 @@ public class UserController {
     
     @PostMapping("api/v1/users")
     public ResponseEntity<?> addUser(@RequestBody User user){
-        service.insert(user);
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(service.insert(user));
     }
 
     @GetMapping("/api/v1/users")

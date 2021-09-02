@@ -16,11 +16,12 @@ public class UserService {
     @Autowired
     private UserRepository repository;
     
-    public void insert(User user){
+    public User insert(User user){
 
         if(isNotDuplicated(user)){
             user.setId(generateId());
-            repository.save(user);            
+            repository.save(user);
+            return user;            
         }else{
             throw new DuplicatedInsertUserException();
         }    
