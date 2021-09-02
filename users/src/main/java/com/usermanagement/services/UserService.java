@@ -2,10 +2,10 @@ package com.usermanagement.services;
 
 import java.util.List;
 
+import com.usermanagement.exceptions.DuplicatedInsertUserException;
+import com.usermanagement.exceptions.UserNotFoundException;
+import com.usermanagement.model.User;
 import com.usermanagement.repositories.UserRepository;
-import com.usermanagement.services.exceptions.DuplicatedInsertUserException;
-import com.usermanagement.services.exceptions.UserNotFoundException;
-import com.usermanagements.model.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

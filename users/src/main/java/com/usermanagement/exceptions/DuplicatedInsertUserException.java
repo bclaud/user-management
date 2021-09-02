@@ -1,4 +1,4 @@
-package com.usermanagement.services.exceptions;
+package com.usermanagement.exceptions;
 
 public class DuplicatedInsertUserException extends RuntimeException {
  

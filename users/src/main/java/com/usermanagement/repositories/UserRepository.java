@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import com.usermanagements.model.User;
+import com.usermanagement.model.User;
 
 import org.springframework.stereotype.Repository;
 
