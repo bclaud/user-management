@@ -20,7 +20,7 @@ public class UserController {
     private UserService service;
     
     @PostMapping("api/v1/users")
-    public ResponseEntity<?> addUser(@RequestBody User user){
+    public ResponseEntity<User> addUser(@RequestBody User user){
         return ResponseEntity.ok(service.insert(user));
     }
 
