@@ -38,8 +38,8 @@ public class UserService {
     public boolean isNotDuplicated(User user){
         
         return repository.findAll().stream()
-            .allMatch(u -> u.getName().toLowerCase() == user.getName().toLowerCase()
-            && u.getSurname().toLowerCase() == user.getSurname().toLowerCase());
+            .noneMatch(u -> u.getName().equalsIgnoreCase(user.getName())
+            && u.getSurname().equalsIgnoreCase(user.getSurname()));
     }
     
     public Long generateId(){
