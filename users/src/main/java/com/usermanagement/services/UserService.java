@@ -17,14 +17,14 @@ public class UserService {
     private UserRepository repository;
     
     public User insert(User user){
-
-        if(isNotDuplicated(user)){
-            user.setId(generateId());
-            repository.save(user);
-            return user;            
-        }else{
+        
+        if(isDuplicated(user)){
             throw new DuplicatedInsertUserException();
-        }    
+        }
+
+        user.setId(generateId());
+        repository.save(user);
+        return user;            
     }
     
     public List<User> findAll(){
@@ -36,10 +36,10 @@ public class UserService {
         .orElseThrow(() -> new UserNotFoundException(id));
     }
     
-    public boolean isNotDuplicated(User user){
+    public boolean isDuplicated(User user){
         
         return repository.findAll().stream()
-            .noneMatch(u -> u.getName().equalsIgnoreCase(user.getName())
+            .anyMatch(u -> u.getName().equalsIgnoreCase(user.getName())
             && u.getSurname().equalsIgnoreCase(user.getSurname()));
     }
     
