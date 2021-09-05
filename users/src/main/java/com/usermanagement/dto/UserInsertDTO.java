@@ -1,4 +1,4 @@
-package com.usermanagement;
+package com.usermanagement.dto;
 
 import com.usermanagement.model.User;
 

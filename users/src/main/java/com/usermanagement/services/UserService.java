@@ -3,8 +3,8 @@ package com.usermanagement.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.usermanagement.UserDTO;
-import com.usermanagement.UserInsertDTO;
+import com.usermanagement.dto.UserDTO;
+import com.usermanagement.dto.UserInsertDTO;
 import com.usermanagement.exceptions.DuplicatedInsertUserException;
 import com.usermanagement.exceptions.UserNotFoundException;
 import com.usermanagement.model.User;

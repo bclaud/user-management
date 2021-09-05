@@ -2,8 +2,8 @@ package com.usermanagement.controller;
 
 import java.util.List;
 
-import com.usermanagement.UserDTO;
-import com.usermanagement.UserInsertDTO;
+import com.usermanagement.dto.UserDTO;
+import com.usermanagement.dto.UserInsertDTO;
 import com.usermanagement.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
