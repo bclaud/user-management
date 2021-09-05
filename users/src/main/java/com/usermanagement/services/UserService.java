@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.usermanagement.UserDTO;
+import com.usermanagement.UserInsertDTO;
 import com.usermanagement.exceptions.DuplicatedInsertUserException;
 import com.usermanagement.exceptions.UserNotFoundException;
 import com.usermanagement.model.User;
@@ -18,8 +19,8 @@ public class UserService {
     @Autowired
     private UserRepository repository;
     
-    public User insert(User user){
-        
+    public UserDTO insert(UserInsertDTO dto){
+        User user = new User(dto.getName(), dto.getSurname(), dto.getAddress());
         if(isDuplicated(user)){
             throw new DuplicatedInsertUserException();
         }
@@ -27,7 +28,7 @@ public class UserService {
         user.setId(generateId());
         user.setSecurityCode(generateSecurityCode());
         repository.save(user);
-        return user;            
+        return new UserDTO(user);            
     }
     
     public List<UserDTO> findAll(){

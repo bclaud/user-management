@@ -3,7 +3,7 @@ package com.usermanagement.controller;
 import java.util.List;
 
 import com.usermanagement.UserDTO;
-import com.usermanagement.model.User;
+import com.usermanagement.UserInsertDTO;
 import com.usermanagement.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ public class UserController {
     private UserService service;
     
     @PostMapping
-    public ResponseEntity<User> addUser(@RequestBody User user){
+    public ResponseEntity<UserDTO> addUser(@RequestBody UserInsertDTO user){
         return ResponseEntity.ok(service.insert(user));
     }
 
