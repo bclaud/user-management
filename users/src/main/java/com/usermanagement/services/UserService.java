@@ -45,9 +45,15 @@ public class UserService {
     }
     
     public Long generateId(){
-        final long minIdValue = 1L;
-        final long maxIdValue = 10L;
-        return minIdValue + (long) (Math.random() * (maxIdValue - minIdValue));
+        final long minIdValue = 0L;
+        final long maxIdValue = 50L;
+        long generatedId = minIdValue + (long) (Math.random() * (maxIdValue - minIdValue));
+        boolean duplicatedId = repository.findAll().stream()
+        .anyMatch(u -> u.getId().equals(generatedId));
+        if(duplicatedId){
+            return generateId();
+        }
+        return generatedId;
     }
 
     public Long generateSecurityCode(){
