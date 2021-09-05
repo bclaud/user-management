@@ -2,6 +2,7 @@ package com.usermanagement.controller;
 
 import java.util.List;
 
+import com.usermanagement.UserDTO;
 import com.usermanagement.model.User;
 import com.usermanagement.services.UserService;
 
@@ -27,12 +28,12 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<List<User>> allUsers(){
+    public ResponseEntity<List<UserDTO>> allUsers(){
         return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/{id}")
-    public User userById(@PathVariable long id){
+    public UserDTO userById(@PathVariable long id){
         return service.findById(id);
     }
 }

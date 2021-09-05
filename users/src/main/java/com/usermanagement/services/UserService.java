@@ -1,7 +1,9 @@
 package com.usermanagement.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.usermanagement.UserDTO;
 import com.usermanagement.exceptions.DuplicatedInsertUserException;
 import com.usermanagement.exceptions.UserNotFoundException;
 import com.usermanagement.model.User;
@@ -21,19 +23,20 @@ public class UserService {
         if(isDuplicated(user)){
             throw new DuplicatedInsertUserException();
         }
-
+        
         user.setId(generateId());
         user.setSecurityCode(generateSecurityCode());
         repository.save(user);
         return user;            
     }
     
-    public List<User> findAll(){
-        return repository.findAll();
+    public List<UserDTO> findAll(){
+        List<User> list = repository.findAll();
+        return list.stream().map(x -> new UserDTO(x)).collect(Collectors.toList());
     }
 
-    public User findById(Long id){
-        return repository.findById(id)
+    public UserDTO findById(Long id){
+        return repository.findById(id).stream().map(x -> new UserDTO(x)).findFirst()
         .orElseThrow(() -> new UserNotFoundException(id));
     }
     
