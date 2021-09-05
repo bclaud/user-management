@@ -10,6 +10,7 @@ public class User implements Serializable {
     private String name;
     private String surname;
     private String address;
+    private Long securityCode;
 
     public User () {
     }
@@ -31,6 +32,14 @@ public class User implements Serializable {
 
     public void setId(Long id){
         this.id = id;
+    }
+
+    public Long getSecurityCode(){
+        return securityCode;
+    }
+
+    public void setSecurityCode(Long securityCode){
+        this.securityCode = securityCode;
     }
 
     public String getName() {

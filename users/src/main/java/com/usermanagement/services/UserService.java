@@ -23,6 +23,7 @@ public class UserService {
         }
 
         user.setId(generateId());
+        user.setSecurityCode(generateSecurityCode());
         repository.save(user);
         return user;            
     }
@@ -46,6 +47,12 @@ public class UserService {
     public Long generateId(){
         final long minIdValue = 1L;
         final long maxIdValue = 10L;
+        return minIdValue + (long) (Math.random() * (maxIdValue - minIdValue));
+    }
+
+    public Long generateSecurityCode(){
+        final long minIdValue = 1000L;
+        final long maxIdValue = 9999L;
         return minIdValue + (long) (Math.random() * (maxIdValue - minIdValue));
     }
 }
