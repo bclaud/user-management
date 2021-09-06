@@ -33,11 +33,11 @@ public class UserService {
     
     public List<UserDto> findAll(){
         List<User> list = repository.findAll();
-        return list.stream().map(x -> new UserDto(x)).collect(Collectors.toList());
+        return list.stream().map(user -> new UserDto(user)).collect(Collectors.toList());
     }
 
     public UserDto findById(Long id){
-        return repository.findById(id).stream().map(x -> new UserDto(x)).findFirst()
+        return repository.findById(id).stream().map(user -> new UserDto(user)).findFirst()
         .orElseThrow(() -> new UserNotFoundException(id));
     }
     
@@ -53,7 +53,7 @@ public class UserService {
         final long maxIdValue = 50L;
         long generatedId = minIdValue + (long) (Math.random() * (maxIdValue - minIdValue));
         boolean duplicatedId = repository.findAll().stream()
-        .anyMatch(u -> u.getId().equals(generatedId));
+        .anyMatch(user -> user.getId().equals(generatedId));
         if(duplicatedId){
             return generateId();
         }
@@ -63,6 +63,12 @@ public class UserService {
     public Long generateSecurityCode(){
         final long minIdValue = 1000L;
         final long maxIdValue = 9999L;
-        return minIdValue + (long) (Math.random() * (maxIdValue - minIdValue));
+        long generatedSecurityCode = minIdValue + (long) (Math.random() * (maxIdValue - minIdValue));
+        boolean duplicatedSecurityCode = repository.findAll().stream()
+        .anyMatch(user -> user.getSecurityCode().equals(generatedSecurityCode));
+        if(duplicatedSecurityCode){
+            return generateSecurityCode();
+        }
+        return generatedSecurityCode;
     }
 }
