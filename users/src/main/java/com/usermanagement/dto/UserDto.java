@@ -2,17 +2,17 @@ package com.usermanagement.dto;
 
 import com.usermanagement.model.User;
 
-public class UserDTO {
+public class UserDto {
     
     private Long id;
     private String name;
     private String surname;
 
-    public UserDTO(){
+    public UserDto(){
 
     }
 
-    public UserDTO(User user) {
+    public UserDto(User user) {
         this.id = user.getId();
         this.name = user.getName();
         this.surname = user.getSurname();

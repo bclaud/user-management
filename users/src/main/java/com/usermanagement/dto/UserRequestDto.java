@@ -2,21 +2,21 @@ package com.usermanagement.dto;
 
 import com.usermanagement.model.User;
 
-public class UserInsertDTO {
+public class UserRequestDto {
     
     private String name;
     private String surname;
     private String address;
 
-    public UserInsertDTO(){
+    public UserRequestDto(){
 
     }
 
-    public UserInsertDTO(User user){
+    public UserRequestDto(User user){
 
     }
     
-    public UserInsertDTO(String name, String surname, String address) {
+    public UserRequestDto(String name, String surname, String address) {
         this.name = name;
         this.surname = surname;
         this.address = address;

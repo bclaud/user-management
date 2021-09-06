@@ -2,8 +2,8 @@ package com.usermanagement.controller;
 
 import java.util.List;
 
-import com.usermanagement.dto.UserDTO;
-import com.usermanagement.dto.UserInsertDTO;
+import com.usermanagement.dto.UserDto;
+import com.usermanagement.dto.UserRequestDto;
 import com.usermanagement.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,17 +23,17 @@ public class UserController {
     private UserService service;
     
     @PostMapping
-    public ResponseEntity<UserDTO> addUser(@RequestBody UserInsertDTO user){
+    public ResponseEntity<UserDto> addUser(@RequestBody UserRequestDto user){
         return ResponseEntity.ok(service.insert(user));
     }
 
     @GetMapping
-    public ResponseEntity<List<UserDTO>> allUsers(){
+    public ResponseEntity<List<UserDto>> allUsers(){
         return ResponseEntity.ok(service.findAll());
     }
 
     @GetMapping("/{id}")
-    public UserDTO userById(@PathVariable long id){
+    public UserDto userById(@PathVariable long id){
         return service.findById(id);
     }
 }
