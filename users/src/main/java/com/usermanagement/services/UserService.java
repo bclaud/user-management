@@ -1,7 +1,10 @@
 package com.usermanagement.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.usermanagement.dto.UserDto;
+import com.usermanagement.dto.UserRequestDto;
 import com.usermanagement.exceptions.DuplicatedInsertUserException;
 import com.usermanagement.exceptions.UserNotFoundException;
 import com.usermanagement.model.User;
@@ -16,23 +19,25 @@ public class UserService {
     @Autowired
     private UserRepository repository;
     
-    public User insert(User user){
-        
+    public UserDto insert(UserRequestDto dto){
+        User user = new User(dto.getName(), dto.getSurname(), dto.getAddress());
         if(isDuplicated(user)){
             throw new DuplicatedInsertUserException();
         }
-
+        
         user.setId(generateId());
+        user.setSecurityCode(generateSecurityCode());
         repository.save(user);
-        return user;            
+        return new UserDto(user);            
     }
     
-    public List<User> findAll(){
-        return repository.findAll();
+    public List<UserDto> findAll(){
+        List<User> list = repository.findAll();
+        return list.stream().map(user -> new UserDto(user)).collect(Collectors.toList());
     }
 
-    public User findById(Long id){
-        return repository.findById(id)
+    public UserDto findById(Long id){
+        return repository.findById(id).stream().map(user -> new UserDto(user)).findFirst()
         .orElseThrow(() -> new UserNotFoundException(id));
     }
     
@@ -44,8 +49,26 @@ public class UserService {
     }
     
     public Long generateId(){
-        final long minIdValue = 1L;
-        final long maxIdValue = 10L;
-        return minIdValue + (long) (Math.random() * (maxIdValue - minIdValue));
+        final long minIdValue = 0L;
+        final long maxIdValue = 50L;
+        long generatedId = minIdValue + (long) (Math.random() * (maxIdValue - minIdValue));
+        boolean duplicatedId = repository.findAll().stream()
+        .anyMatch(user -> user.getId().equals(generatedId));
+        if(duplicatedId){
+            return generateId();
+        }
+        return generatedId;
+    }
+
+    public Long generateSecurityCode(){
+        final long minIdValue = 1000L;
+        final long maxIdValue = 9999L;
+        long generatedSecurityCode = minIdValue + (long) (Math.random() * (maxIdValue - minIdValue));
+        boolean duplicatedSecurityCode = repository.findAll().stream()
+        .anyMatch(user -> user.getSecurityCode().equals(generatedSecurityCode));
+        if(duplicatedSecurityCode){
+            return generateSecurityCode();
+        }
+        return generatedSecurityCode;
     }
 }
