@@ -2,8 +2,8 @@ package com.usermanagement.controller;
 
 import java.util.List;
 
-import com.usermanagement.dto.UserDto;
-import com.usermanagement.dto.UserRequestDto;
+import com.usermanagement.mapper.dto.UserDto;
+import com.usermanagement.mapper.dto.UserRequestDto;
 import com.usermanagement.services.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;

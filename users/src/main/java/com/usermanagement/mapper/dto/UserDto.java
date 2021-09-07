@@ -1,4 +1,4 @@
-package com.usermanagement.dto;
+package com.usermanagement.mapper.dto;
 
 import com.usermanagement.model.User;
 
