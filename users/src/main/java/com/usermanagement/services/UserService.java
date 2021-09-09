@@ -3,10 +3,11 @@ package com.usermanagement.services;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.usermanagement.dto.UserDto;
-import com.usermanagement.dto.UserRequestDto;
 import com.usermanagement.exceptions.DuplicatedInsertUserException;
 import com.usermanagement.exceptions.UserNotFoundException;
+import com.usermanagement.mapper.UserMapper;
+import com.usermanagement.mapper.dto.UserDto;
+import com.usermanagement.mapper.dto.UserRequestDto;
 import com.usermanagement.model.User;
 import com.usermanagement.repositories.UserRepository;
 
@@ -18,9 +19,13 @@ public class UserService {
 
     @Autowired
     private UserRepository repository;
+
+    @Autowired
+    private UserMapper userMapper;
     
     public UserDto insert(UserRequestDto dto){
-        User user = new User(dto.getName(), dto.getSurname(), dto.getAddress());
+
+        User user = userMapper.userRequestDtoToUser(dto);
         if(isDuplicated(user)){
             throw new DuplicatedInsertUserException();
         }
@@ -33,11 +38,11 @@ public class UserService {
     
     public List<UserDto> findAll(){
         List<User> list = repository.findAll();
-        return list.stream().map(user -> new UserDto(user)).collect(Collectors.toList());
+        return list.stream().map(user -> userMapper.userToUserDto(user)).collect(Collectors.toList());
     }
 
     public UserDto findById(Long id){
-        return repository.findById(id).stream().map(user -> new UserDto(user)).findFirst()
+        return repository.findById(id).stream().map(user -> userMapper.userToUserDto(user)).findFirst()
         .orElseThrow(() -> new UserNotFoundException(id));
     }
     
