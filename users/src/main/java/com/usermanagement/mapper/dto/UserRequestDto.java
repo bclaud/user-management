@@ -2,10 +2,15 @@ package com.usermanagement.mapper.dto;
 
 import com.usermanagement.model.User;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class UserRequestDto {
-    
+
+    @ApiModelProperty(notes = "Can't be equals another Users name and surname", required = true)
     private String name;
+    @ApiModelProperty(notes = "Can't be equals another Users name and surname", required = true)
     private String surname;
+    @ApiModelProperty(required = true)
     private String address;
 
     public UserRequestDto(){
