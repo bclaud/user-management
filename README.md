@@ -18,3 +18,5 @@ POST no /api/v1/users: aceita formato JSON com os atributos name, surname e addr
 GET no /api/v1/users: lista todos os users criados
 
 Get no /api/v1/users/{id} retorna o usuario do respectivo ID
+
+Com a aplicação rodando, acesse http://localhost:8080/swagger-ui/ para conferir as especificações completas 

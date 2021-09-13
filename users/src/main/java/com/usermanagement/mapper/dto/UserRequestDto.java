@@ -2,11 +2,13 @@ package com.usermanagement.mapper.dto;
 
 import com.usermanagement.model.User;
 
+import io.swagger.annotations.ApiModelProperty;
+
 public class UserRequestDto {
-    
-    private String name;
-    private String surname;
-    private String address;
+
+    @ApiModelProperty(value = "first name of the user", example = "Vatsal") private String name;
+    @ApiModelProperty(value = "Surname name of the user", example = "Sheth") private String surname;
+    @ApiModelProperty(value = "Addres of the user", example = "5th Avenue, New York") private String address;
 
     public UserRequestDto(){
 
