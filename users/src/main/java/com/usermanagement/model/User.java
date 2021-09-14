@@ -31,6 +31,19 @@ public class User implements Serializable {
         this.address = address;
     }
 
+    public User ( Long id, String name, String surname){
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+    }
+
+    public User ( Long id, String name, String surname, long securityCode){
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.securityCode = securityCode;
+    }
+
     public Long getId() {
         return id;
     }

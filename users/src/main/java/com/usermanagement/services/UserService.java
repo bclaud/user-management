@@ -33,7 +33,7 @@ public class UserService {
         user.setId(generateId());
         user.setSecurityCode(generateSecurityCode());
         repository.save(user);
-        return new UserDto(user);            
+        return userMapper.userToUserDto(user);            
     }
     
     public List<UserDto> findAll(){
