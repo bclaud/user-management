@@ -3,10 +3,12 @@ package com.usermanagement.services;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.List;
+import java.util.Optional;
 
 import com.usermanagement.mapper.UserMapper;
 import com.usermanagement.mapper.dto.UserDto;
@@ -14,90 +16,109 @@ import com.usermanagement.mapper.dto.UserRequestDto;
 import com.usermanagement.model.User;
 import com.usermanagement.repositories.UserRepository;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class UserServiceTest {
+
+    @InjectMocks 
+    UserService service;
     
-    @Autowired
-    private UserService service;
+    @Mock
+    UserRepository repository;
 
-    @Autowired
-    private UserMapper userMapper;
+    @Mock
+    UserMapper mapper;
 
-    @MockBean
-    private UserRepository repository;
+    User user = new User();
+    UserRequestDto userRequestDto;
+    UserDto userDto;
 
-    @MockBean
-    private UserDto userDto;
-
-    @MockBean
-    private UserRequestDto userRequestDto;
-
-    @MockBean
-    private User user;
-
-    @Test
-    public void findAll_ReturnListOfUsers() { 
-        when(repository.findAll()).thenReturn(Stream.of(new User("test", "user"))
-        .collect((Collectors.toList())));    
-
-        assertEquals(1, service.findAll().size());
+    @BeforeEach
+    public void init(){
+        user.setId(1L);
+        user.setName("test");
+        user.setSurname("test");
+        user.setAddress("Test street");
+        user.setSecurityCode(1111L);
     }
 
     @Test
-    public void insert_ValidUser_AddUser(){
-        UserRequestDto userRequestDto = new UserRequestDto("test", "user", "test street");
-        User user = userMapper.userRequestDtoToUser(userRequestDto);
+    public void insert_ReturnUserDto() {
 
-        when(repository.save(user)).thenReturn(user);
-        when(service.insert(userRequestDto)).thenReturn(new UserDto(user));
+        when(repository.findAll()).thenReturn(List.of(user));    
+        when(repository.save(any(User.class))).thenReturn(user);
+        when(service.isDuplicated(user)).thenReturn(false);
 
+        doNothing().when(mapper.userToUserDto(user));
         assertEquals(user.getName(), service.insert(userRequestDto).getName());
+    }
+    
+    @Test
+    public void findAll_ReturnListOfUsers() { 
+        when(repository.findAll()).thenReturn(List.of(user));    
+        
+        assertEquals(1, service.findAll().size());
+    }
+    
+    @Test
+    public void findById_ReturnUserDto_notNull() {
+
+        when(repository.findById(1L)).thenReturn(Optional.of(user));
+        when(mapper.userToUserDto(user)).thenReturn(userDto);        
+        when(service.findById(1L)).thenReturn(userDto);
+
+        assertNotNull(service.findById(1L));
     }
 
     @Test
     public void isDuplicated_SameNameAndSurname_true(){
 
-        User user = new User("test", "user");
-
-        when(repository.findAll()).thenReturn(Stream.of(new User("test", "user"))
-        .collect(Collectors.toList()));
+        when(repository.findAll()).thenReturn(List.of(user));
 
         assertTrue(service.isDuplicated(user));
     }
 
     @Test
-    public void generateId_ReturnNotDuplicatedLongId(){
+    public void generateId_ReturnLongBetweenMinAndMax_true() {
         
-        when(repository.findAll()).thenReturn(Stream.of(new User(1L,"test","user"))
-        .collect(Collectors.toList()));
+        when(repository.findAll()).thenReturn(List.of(user));
+        final long minIdValue = 0L;
+        final long maxIdValue = 50L;
+        Long id = service.generateId();
+        boolean validId = false;
+        if(id >= minIdValue && id <= maxIdValue){
+            validId = true;
+        }
         
-        when(service.generateId()).thenReturn(30L);
+        assertTrue(validId);
     }
 
     @Test
-    public void generatedSecurityCode_ReturnNotDuplicatedLongSecurityCode(){
+    public void generateSecurityCodeReturnLongBetweenMinAndMax_true(){
+        when(repository.findAll()).thenReturn(List.of(user));
 
-        when(repository.findAll()).thenReturn(Stream.of(new User(1L,"test","user", 1000L))
-        .collect(Collectors.toList()));
-
-        when(service.generateSecurityCode()).thenReturn(1111L);
-    }
-
-    @Test
-    public void findById_ReturnValidUserDto(){
-        User user = new User(1L, "test", "test");
-        user.setAddress("test address");
-        user.setSecurityCode(1111L);
-        UserDto userDto = userMapper.userToUserDto(user);
-
-        when(repository.save(user)).thenReturn(user);
-        when(service.findById(1L)).thenReturn(userDto);
+        final long minSecurityCodeValue = 1000L;
+        final long maxSecurityCodeValue = 9999L;
+        Long id = service.generateSecurityCode();
+        boolean validSecurityCode = false;
+        if(id >= minSecurityCodeValue && id <= maxSecurityCodeValue){
+            validSecurityCode = true;
+        }
         
-        assertNotNull(userDto);
+        assertTrue(validSecurityCode);
     }
+
+
+
+
+
+
+
+
 }
