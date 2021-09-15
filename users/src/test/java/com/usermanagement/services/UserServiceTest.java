@@ -3,8 +3,6 @@ package com.usermanagement.services;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -108,7 +106,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void generateSecurityCodeReturnLongBetweenMinAndMax_true(){
+    public void generateSecurityCode_ReturnLongBetweenMinAndMax_true(){
         when(repository.findAll()).thenReturn(List.of(user));
 
         final long minSecurityCodeValue = 1000L;
