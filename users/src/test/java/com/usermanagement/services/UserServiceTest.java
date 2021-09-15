@@ -36,8 +36,8 @@ public class UserServiceTest {
     UserMapper mapper;
 
     User user = new User();
-    UserRequestDto userRequestDto;
-    UserDto userDto;
+    UserRequestDto userRequestDto = new UserRequestDto();
+    UserDto userDto = new UserDto();
 
     @BeforeEach
     public void init(){
@@ -46,16 +46,24 @@ public class UserServiceTest {
         user.setSurname("test");
         user.setAddress("Test street");
         user.setSecurityCode(1111L);
+
+        userRequestDto.setName("test");
+        userRequestDto.setSurname("test");
+        userRequestDto.setAddress("Test street");
+
+        userDto.setId(1L);
+        userDto.setName("test");
+        userDto.setSurname("test");
     }
 
     @Test
     public void insert_ReturnUserDto() {
 
-        when(repository.findAll()).thenReturn(List.of(user));    
-        when(repository.save(any(User.class))).thenReturn(user);
-        when(service.isDuplicated(user)).thenReturn(false);
+        when(repository.save(user)).thenReturn(user);
+        when(mapper.userRequestDtoToUser(userRequestDto)).thenReturn(user);
+        when(mapper.userToUserDto(user)).thenReturn(userDto);
+        when(service.insert(userRequestDto)).thenReturn(userDto);
 
-        doNothing().when(mapper.userToUserDto(user));
         assertEquals(user.getName(), service.insert(userRequestDto).getName());
     }
     
@@ -113,12 +121,4 @@ public class UserServiceTest {
         
         assertTrue(validSecurityCode);
     }
-
-
-
-
-
-
-
-
 }
