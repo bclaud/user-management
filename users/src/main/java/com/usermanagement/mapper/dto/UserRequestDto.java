@@ -8,7 +8,7 @@ public class UserRequestDto {
 
     @ApiModelProperty(value = "first name of the user", example = "Vatsal") private String name;
     @ApiModelProperty(value = "Surname name of the user", example = "Sheth") private String surname;
-    @ApiModelProperty(value = "Addres of the user", example = "5th Avenue, New York") private String address;
+    @ApiModelProperty(value = "Address of the user", example = "5th Avenue, New York") private String address;
 
     public UserRequestDto(){
 
