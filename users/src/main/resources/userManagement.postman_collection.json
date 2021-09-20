@@ -1,0 +1,165 @@
+{
+	"info": {
+		"_postman_id": "e7f5d377-962d-4338-9689-99830cf69656",
+		"name": "User management",
+		"description": "Users API REST\n 1.0 \n[ Base URL: localhost:8080/ ]http://localhost:8080/v2/api-docs\n\nAPI developed for learning purposes.\n\nYou can register and get users from this API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"\r",
+							"const jsonStatus = pm.response.code;\r",
+							"\r",
+							"const defaultID = 1\r",
+							"\r",
+							"if(jsonStatus == 400){\r",
+							"    pm.test(\"Unsuccessful POST. Duplicated user\", function() {\r",
+							"        pm.expect(pm.response.code).to.be.oneOf([400]);\r",
+							"    })\r",
+							"    pm.collectionVariables.set(\"userID\", defaultID);\r",
+							"}else if(jsonStatus == 200){\r",
+							"    pm.test(\"Successful POST request or Bad Request when duplicated\", function () {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 202, 400]);\r",
+							"    pm.response.to.be.json;\r",
+							"    pm.collectionVariables.set(\"userID\", pm.response.json().id);\r",
+							"});\r",
+							"}\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"test\",\r\n    \"surname\": \"user\",\r\n    \"address\": \"Test Street\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}api/v1/users",
+					"host": [
+						"{{baseURL}}api"
+					],
+					"path": [
+						"v1",
+						"users"
+					]
+				},
+				"description": "Insert new user. Can't be duplicated"
+			},
+			"response": []
+		},
+		{
+			"name": "user by id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET by id request or Not Found\", function() {\r",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 404]);\r",
+							"    pm.response.to.be.json; \r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}api/v1/users/{{userID}}",
+					"host": [
+						"{{baseURL}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						"{{userID}}"
+					]
+				},
+				"description": "Provide an ID as path variable to return an User. Will return 'Not found' if provided ID doesn't exist."
+			},
+			"response": []
+		},
+		{
+			"name": "all users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful GET request\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"    pm.response.to.be.json; \r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}api/v1/users/",
+					"host": [
+						"{{baseURL}}api"
+					],
+					"path": [
+						"v1",
+						"users",
+						""
+					]
+				},
+				"description": "Return a list with all inserted users.\nNo parameters are needed"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:8080/"
+		},
+		{
+			"key": "userID",
+			"value": ""
+		}
+	]
+}
