@@ -39,19 +39,25 @@ public class UserServiceTest {
 
     @BeforeEach
     public void init(){
-        user.setId(1L);
-        user.setName("test");
-        user.setSurname("test");
-        user.setAddress("Test street");
-        user.setSecurityCode(1111L);
+        user = User.builder()
+        .id(1L)
+        .name("test")
+        .surname("test")
+        .address("Test street")
+        .securityCode(1111L)
+        .build();
 
-        userRequestDto.setName("test");
-        userRequestDto.setSurname("test");
-        userRequestDto.setAddress("Test street");
+        userRequestDto = UserRequestDto.builder()
+        .name("test")
+        .surname("test")
+        .address("test street")
+        .build();
 
-        userDto.setId(1L);
-        userDto.setName("test");
-        userDto.setSurname("test");
+        userDto = UserDto.builder()
+        .id(1L)
+        .name("test")
+        .surname("test")
+        .build();
     }
 
     @Test
