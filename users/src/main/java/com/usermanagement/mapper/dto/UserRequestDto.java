@@ -1,11 +1,17 @@
 package com.usermanagement.mapper.dto;
 
 import io.swagger.annotations.ApiModelProperty;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter @NoArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 public class UserRequestDto {
 
     @ApiModelProperty(value = "first name of the user", example = "Vatsal") private String name;
