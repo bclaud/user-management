@@ -3,12 +3,42 @@
 exercício API REST com métodos POST e GET
 
 - list como banco de dados não persistente ✅
-- metodo POST em /users com endereço opcional(O endereço vem vazio no JSON caso não mande nenhum, este é o padrão mesmo?) ✅
+- metodo POST em /users com endereço opcional ✅
 - metodo POST atraves da requisição pelo body por JSON ✅
-- Gerado de forma randomica (de 0 a 50) ✅
+- ID Gerado de forma randomica (de 0 a 50) ✅
 - Retornar erro caso nome e sobrenome já constar na lista ✅
 - GET por id ✅
 - Retornar 404 ao buscar id invalido ✅
+</br></br>
+
+# Requisitos
+- Git
+
+- JDK-11
+
+ou 
+
+- Docker se for rodar pela imagem
+</br></br>
+
+# Como executar
+
+Clone este repositório
+```git
+git clone git@github.com:bclaud/user-management.git
+```
+
+Execute a aplicação entrando no diretório do projeto e então executando através dos comandos abaixo:
+```bash
+cd users
+./mvnw spring-boot:run
+```
+
+ou utilize a imagem disponivel no docker hub 🐋
+```bash
+docker pull baclaud/dockerhub:usermanagementimage
+docker run -p 8080:8080 -d --name usermanagement baclaud/usermanagement-slim:latest
+```
  
 
 **Endpoints**
